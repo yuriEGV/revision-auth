@@ -77,7 +77,7 @@ app.listen(PORT, () => {
 });
 */
 
-const express = require('express');
+/*const express = require('express');
 const conectarDB = require('./config/db');
 const dotenv = require('dotenv');
 const cors = require('cors');
@@ -98,6 +98,35 @@ app.use('/api/protected', verifyToken, (req, res) => {
 
 // Rutas
 app.use('/api/auth', require('./routes/authRoutes'));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});*/
+
+
+import express from 'express';
+import conectarDB from './config/db.js';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import { verifyToken } from './controllers/authController.js';
+import authRoutes from './routes/authRoutes.js';
+
+dotenv.config();
+conectarDB();
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// Ruta protegida
+app.use('/api/protected', verifyToken, (req, res) => {
+  res.json({ msg: 'Ruta protegida accedida correctamente' });
+});
+
+// Rutas
+app.use('/api/auth', authRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
