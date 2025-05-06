@@ -233,7 +233,7 @@ export async function invalidateToken(req, res) {
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Usuario from '../models/Usuario.js';
-import { connectDB } from '../utils/db.js';
+import { connectDB } from '../api/utils/db.js';
 
 export async function registrar(req, res) {
   await connectDB();
